@@ -15,7 +15,6 @@
 
 package org.openapitools.client.models
 
-
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -30,65 +29,16 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class ConversionForm(
 
    @field:JsonProperty("sourceAssetCode")
-   val sourceAssetCode: ConversionForm.SourceAssetCode,
+   val sourceAssetCode: AssetCode,
 
    @field:JsonProperty("sourceAmount")
    val sourceAmount: java.math.BigDecimal,
 
    @field:JsonProperty("targetAssetCode")
-   val targetAssetCode: ConversionForm.TargetAssetCode,
+   val targetAssetCode: AssetCode,
 
    ) {
 
-   /**
-    *
-    *
-    * Values: BTC,ETH,APPLE,TESLA,GOLD,SILVER
-    */
-   enum class SourceAssetCode(val value: kotlin.String) {
-      @JsonProperty(value = "BTC")
-      BTC("BTC"),
-
-      @JsonProperty(value = "ETH")
-      ETH("ETH"),
-
-      @JsonProperty(value = "APPLE")
-      APPLE("APPLE"),
-
-      @JsonProperty(value = "TESLA")
-      TESLA("TESLA"),
-
-      @JsonProperty(value = "GOLD")
-      GOLD("GOLD"),
-
-      @JsonProperty(value = "SILVER")
-      SILVER("SILVER");
-   }
-
-   /**
-    *
-    *
-    * Values: BTC,ETH,APPLE,TESLA,GOLD,SILVER
-    */
-   enum class TargetAssetCode(val value: kotlin.String) {
-      @JsonProperty(value = "BTC")
-      BTC("BTC"),
-
-      @JsonProperty(value = "ETH")
-      ETH("ETH"),
-
-      @JsonProperty(value = "APPLE")
-      APPLE("APPLE"),
-
-      @JsonProperty(value = "TESLA")
-      TESLA("TESLA"),
-
-      @JsonProperty(value = "GOLD")
-      GOLD("GOLD"),
-
-      @JsonProperty(value = "SILVER")
-      SILVER("SILVER");
-   }
 
 }
 

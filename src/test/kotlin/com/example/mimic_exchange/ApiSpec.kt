@@ -10,8 +10,11 @@ import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import org.openapitools.client.apis.UserApi
 import org.openapitools.client.models.*
-import org.openapitools.client.models.ConversionForm.SourceAssetCode
-import org.openapitools.client.models.ConversionForm.TargetAssetCode
+import org.openapitools.client.models.AssetType.*
+import org.openapitools.client.models.ExchangeType.PURCHASE
+import org.openapitools.client.models.ExchangeType.SALE
+import org.openapitools.client.models.TransactionType.DEPOSIT
+import org.openapitools.client.models.TransactionType.WITHDRAWAL
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
 
@@ -43,7 +46,7 @@ class ApiSpec : FreeSpec() {
             transaction should {
                it.id shouldBeGreaterThan 0
                it.userId shouldBe user.id
-               it.type shouldBe Transaction.Type.DEPOSIT
+               it.type shouldBe DEPOSIT
                it.amount shouldBe amount
             }
          }
@@ -89,7 +92,7 @@ class ApiSpec : FreeSpec() {
             withdrawalTransaction should {
                it.id shouldBeGreaterThan 0
                it.userId shouldBe user.id
-               it.type shouldBe Transaction.Type.WITHDRAWAL
+               it.type shouldBe WITHDRAWAL
                it.amount shouldBe withdrawalAmount
             }
          }
@@ -114,8 +117,8 @@ class ApiSpec : FreeSpec() {
             exchange should {
                it.id shouldBeGreaterThan 0
                it.userId shouldBe user.id
-               it.type shouldBe Exchange.Type.PURCHASE
-               it.assetCode shouldBe Exchange.AssetCode.BTC
+               it.type shouldBe PURCHASE
+               it.assetCode shouldBe AssetCode.BTC
                it.amount shouldBe btcAmount
                it.unitPrice shouldBe BTC.price()
                it.totalPrice shouldBe 7500.toBigDecimal()
@@ -130,8 +133,8 @@ class ApiSpec : FreeSpec() {
                it.balance shouldBe 2500.toBigDecimal()
                it.assets shouldBe listOf(
                   Asset(
-                     code = Asset.Code.BTC,
-                     type = Asset.Type.CRYPTO,
+                     code = AssetCode.BTC,
+                     type = CRYPTO,
                      amount = btcAmount,
                      totalValue = 7500.toBigDecimal()
                   )
@@ -153,8 +156,8 @@ class ApiSpec : FreeSpec() {
             sale should {
                it.id shouldBeGreaterThan 0
                it.userId shouldBe user.id
-               it.type shouldBe Exchange.Type.SALE
-               it.assetCode shouldBe Exchange.AssetCode.SILVER
+               it.type shouldBe SALE
+               it.assetCode shouldBe AssetCode.SILVER
                it.amount shouldBe saleAmount
                it.unitPrice shouldBe SILVER.price()
                it.totalPrice shouldBe 3750.toBigDecimal()
@@ -169,8 +172,8 @@ class ApiSpec : FreeSpec() {
                it.balance shouldBe 4750.toBigDecimal()
                it.assets shouldBe listOf(
                   Asset(
-                     code = Asset.Code.SILVER,
-                     type = Asset.Type.COMMODITY,
+                     code = AssetCode.SILVER,
+                     type = COMMODITY,
                      amount = 50.toBigDecimal(),
                      totalValue = 1250.toBigDecimal()
                   )
@@ -185,17 +188,17 @@ class ApiSpec : FreeSpec() {
          val purchaseForm = silverPurchase(purchaseAmount)
          USER_API.createExchangeBy(user.id, purchaseForm)
 
-         val sourceAssetCode = SourceAssetCode.SILVER
+         val sourceAssetCode = AssetCode.SILVER
          val sourceAmount = 200.toBigDecimal()
-         val targetAssetCode = TargetAssetCode.TESLA
+         val targetAssetCode = AssetCode.TESLA
          val conversionForm = ConversionForm(sourceAssetCode, sourceAmount, targetAssetCode)
          val conversion = USER_API.createConversionBy(user.id, conversionForm)
 
          "with expected result" {
             conversion shouldBe Conversion(
-               sourceAssetCode = Conversion.SourceAssetCode.SILVER,
+               sourceAssetCode = AssetCode.SILVER,
                sourceAmount = sourceAmount,
-               targetAssetCode = Conversion.TargetAssetCode.TESLA,
+               targetAssetCode = AssetCode.TESLA,
                targetAmount = 25.toBigDecimal()
             )
          }
@@ -207,14 +210,14 @@ class ApiSpec : FreeSpec() {
                it.balance shouldBe 4500.toBigDecimal()
                it.assets shouldBe listOf(
                   Asset(
-                     code = Asset.Code.SILVER,
-                     type = Asset.Type.COMMODITY,
+                     code = AssetCode.SILVER,
+                     type = COMMODITY,
                      amount = 100.toBigDecimal(),
                      totalValue = 2500.toBigDecimal()
                   ),
                   Asset(
-                     code = Asset.Code.TESLA,
-                     type = Asset.Type.STOCK,
+                     code = AssetCode.TESLA,
+                     type = STOCK,
                      amount = 25.toBigDecimal(),
                      totalValue = 5000.toBigDecimal()
                   )
@@ -234,29 +237,29 @@ private fun userWithBalance(amount: Int): User {
 }
 
 private fun deposit(amount: BigDecimal) = TransactionForm(
-   type = TransactionForm.Type.DEPOSIT,
+   type = DEPOSIT,
    amount = amount
 )
 
 private fun withdrawal(amount: BigDecimal) = TransactionForm(
-   type = TransactionForm.Type.WITHDRAWAL,
+   type = WITHDRAWAL,
    amount = amount
 )
 
 private fun btcPurchase(amount: BigDecimal) = ExchangeForm(
-   type = ExchangeForm.Type.PURCHASE,
-   assetCode = ExchangeForm.AssetCode.BTC,
+   type = PURCHASE,
+   assetCode = AssetCode.BTC,
    amount = amount
 )
 
 private fun silverPurchase(amount: BigDecimal) = ExchangeForm(
-   type = ExchangeForm.Type.PURCHASE,
-   assetCode = ExchangeForm.AssetCode.SILVER,
+   type = PURCHASE,
+   assetCode = AssetCode.SILVER,
    amount = amount
 )
 
 private fun silverSale(amount: BigDecimal) = ExchangeForm(
-   type = ExchangeForm.Type.SALE,
-   assetCode = ExchangeForm.AssetCode.SILVER,
+   type = SALE,
+   assetCode = AssetCode.SILVER,
    amount = amount
 )

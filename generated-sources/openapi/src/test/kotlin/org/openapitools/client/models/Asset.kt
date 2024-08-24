@@ -15,7 +15,6 @@
 
 package org.openapitools.client.models
 
-
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -31,10 +30,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Asset(
 
    @field:JsonProperty("code")
-   val code: Asset.Code,
+   val code: AssetCode,
 
    @field:JsonProperty("type")
-   val type: Asset.Type,
+   val type: AssetType,
 
    @field:JsonProperty("amount")
    val amount: java.math.BigDecimal,
@@ -44,46 +43,6 @@ data class Asset(
 
    ) {
 
-   /**
-    *
-    *
-    * Values: BTC,ETH,APPLE,TESLA,GOLD,SILVER
-    */
-   enum class Code(val value: kotlin.String) {
-      @JsonProperty(value = "BTC")
-      BTC("BTC"),
-
-      @JsonProperty(value = "ETH")
-      ETH("ETH"),
-
-      @JsonProperty(value = "APPLE")
-      APPLE("APPLE"),
-
-      @JsonProperty(value = "TESLA")
-      TESLA("TESLA"),
-
-      @JsonProperty(value = "GOLD")
-      GOLD("GOLD"),
-
-      @JsonProperty(value = "SILVER")
-      SILVER("SILVER");
-   }
-
-   /**
-    *
-    *
-    * Values: CRYPTO,STOCK,COMMODITY
-    */
-   enum class Type(val value: kotlin.String) {
-      @JsonProperty(value = "CRYPTO")
-      CRYPTO("CRYPTO"),
-
-      @JsonProperty(value = "STOCK")
-      STOCK("STOCK"),
-
-      @JsonProperty(value = "COMMODITY")
-      COMMODITY("COMMODITY");
-   }
 
 }
 

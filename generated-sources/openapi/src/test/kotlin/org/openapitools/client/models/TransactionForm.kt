@@ -15,7 +15,6 @@
 
 package org.openapitools.client.models
 
-
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -29,25 +28,13 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class TransactionForm(
 
    @field:JsonProperty("type")
-   val type: TransactionForm.Type,
+   val type: TransactionType,
 
    @field:JsonProperty("amount")
    val amount: java.math.BigDecimal,
 
    ) {
 
-   /**
-    *
-    *
-    * Values: DEPOSIT,WITHDRAWAL
-    */
-   enum class Type(val value: kotlin.String) {
-      @JsonProperty(value = "DEPOSIT")
-      DEPOSIT("DEPOSIT"),
-
-      @JsonProperty(value = "WITHDRAWAL")
-      WITHDRAWAL("WITHDRAWAL");
-   }
 
 }
 

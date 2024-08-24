@@ -7,6 +7,7 @@ import com.example.mimic_exchange.domain.exchange.Exchange
 import com.example.mimic_exchange.domain.exchange.ExchangeForm
 import com.example.mimic_exchange.domain.transaction.Transaction
 import com.example.mimic_exchange.domain.transaction.TransactionForm
+import io.swagger.v3.core.jackson.ModelResolver
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
 
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.*
 class Controller(
    private val userService: UserService,
 ) {
+   init {
+      ModelResolver.enumsAsRef = true
+   }
+
    @PostMapping
    fun createUserBy(@RequestBody form: UserForm): User = userService.createBy(form)
 
